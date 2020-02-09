@@ -15,6 +15,8 @@ Method 1: Using service motion, (sudo apt-get install motion )
 or 192.168.1.71:8080 for managing
 4) sudo service motion stop
 
+problem: really low rate or missing frame, long delay
+
 Method 2: Using fswebcam to take screen shot
 make sure previous daemon has stopped
 1)sudo fswebcam test_image.jpg
