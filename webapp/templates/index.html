@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Camera Tracking System</title>
+        <link rel="stylesheet" href='/static/style.css' />
+    </head>
+    <body>
+    <h1><span style="color:white; font-weight:bold">
+        Camera
+        </span> 
+        <span id="trackingg" style="border-radius: 5px;padding:5px 3px; color:black; background:#f90;font-weight:bold">
+        Tracker
+        </span>  
+        
+    </h1>
+
+    <h2 style="color:white">Live Camera Feed</h2>
+    <p>(Comment: this is default and camera is in static mode,)</p>
+    <img src="{{ url_for('video_feed') }}">
+    </br>
+    </br>
+    </br>
+    <a style = "text-decoration:none;" href="{{ url_for('CruisingMode') }}">
+        <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+        Go to Cruising Mode
+        </span>
+    </a>
+
+    </br>
+    </br>
+    </br>
+    </br>
+    
+
+    <a style = "text-decoration:none;" href="{{ url_for('ManualMode') }}">
+        <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+        Go to Manual Mode
+        </span>
+    </a>
+
+    </body>
+</html>

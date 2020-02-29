@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>Camera Tracking System</title>
+        <link rel="stylesheet" href='/static/style.css' />
+    </head>
+    <body>
+    <h1><span style="color:white; background:black; font-weight:bold">
+        Camera
+        </span> 
+        <span id="trackingg" style="border-radius: 5px;padding:2px 3px; color:black; background:#f90;font-weight:bold">
+        Tracker
+        </span>  
+        
+    </h1>
+
+    <h2 style="color:white">Crusising Mode Camera Feed</h2>
+    <img src="{{ url_for('video_feed') }}">
+    </br>
+
+    </br>
+    </br>
+    <a style = "text-decoration:none;" href="{{ url_for('index') }}">
+        <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+        Return To Live Camera Feed
+        </span>
+    </a>
+
+    </body>
+</html>
