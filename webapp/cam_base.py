@@ -14,3 +14,10 @@ class Base_Camera(object):
         # return self.frames[int(time.time()) % 3]
         frames = open('/home/pi/fifo_img.jpg','rb').read()
         return frames
+
+    # this is the server testing function. 
+    # send three sample image through the server instead of the real camera feed
+    def get_frame_test(self):
+        frames = [open(f + '.jpg', 'rb').read() for f in ['1', '2', '3']]
+        # frames = open('1.jpg','rb').read()
+        return frames[int(time.time()) % 3]
