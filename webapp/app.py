@@ -1,5 +1,6 @@
 from flask import Flask,render_template,Response
 from cam_base import Base_Camera
+# from motor_control import gimbal
 
 app = Flask(__name__)
 
@@ -9,7 +10,8 @@ def index():
 
 def gen(camera):
     while True:
-        frame = camera.get_frame()
+        # frame = camera.get_frame()
+        frame = camera.get_frame_test()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n')
 
@@ -22,6 +24,44 @@ def CruisingMode():
 def ManualMode():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     return render_template('ManualMode.html')
+
+@app.route('/turnleft')
+def turnleft():
+    # send a signal to motorcontroller/otherthings to alert camera to change mode
+    print("call motor to turn left ")
+    return render_template('ManualMode.html')
+    # return "nothing"
+
+@app.route('/turnright')
+def turnright():
+    # send a signal to motorcontroller/otherthings to alert camera to change mode
+    print("call motor to turn right ")
+    return render_template('ManualMode.html')
+
+@app.route('/turnup')
+def turnup():
+    # send a signal to motorcontroller/otherthings to alert camera to change mode
+    print("call motor to turn up ")
+    return render_template('ManualMode.html')
+
+@app.route('/turndown')
+def turndown():
+    # send a signal to motorcontroller/otherthings to alert camera to change mode
+    print("call motor to turn down ")
+    return render_template('ManualMode.html')
+    # return "nothing"
+
+@app.route('/stopturning')
+def stopturning():
+    # send a signal to motorcontroller/otherthings to alert camera to change mode
+    print("call motor to stop turning ")
+    return render_template('ManualMode.html')
+    # return "nothing"
+
+@app.route('/SelectTarget')
+def SelectTarget():
+    # send a signal to motorcontroller/otherthings to alert camera to change mode
+    return render_template('SelectTarget.html')
 
 @app.route('/video_feed')
 def video_feed():
