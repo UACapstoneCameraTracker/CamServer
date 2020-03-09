@@ -14,21 +14,20 @@
     </h1>
 
     <h2 style="color:white">Live Camera Feed</h2>
-    <p>(Comment: this is default and camera is in static mode,)</p>
-    <img src="{{ url_for('video_feed') }}">
+    <p>(Comment: this is main page and camera is in default static mode,)</p>
+    <img src="{{ url_for('video_feed') }}" height="480" width="640">
     <br>
     <br>
     <br>
+
+    <div>
     <a style = "text-decoration:none;" href="{{ url_for('CruisingMode') }}">
         <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
         Go to Cruising Mode
         </span>
     </a>
 
-    <br>
-    <br>
-    <br>
-    <br>
+    <span style="width:50px;display:inline-block"></span>
     
 
     <a style = "text-decoration:none;" href="{{ url_for('ManualMode') }}">
@@ -36,16 +35,16 @@
         Go to Manual Mode
         </span>
     </a>
-    <br>
-    <br>
-    <br>
-    <br>
+    
+    <span style="width:50px;display:inline-block"></span>
 
     <a style = "text-decoration:none;" href="{{ url_for('SelectTarget') }}">
         <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
         Go to SelectTarget
         </span>
     </a>
+
+    </div>
 
     </body>
 </html>
