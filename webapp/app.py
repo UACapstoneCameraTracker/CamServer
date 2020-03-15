@@ -1,6 +1,7 @@
 from flask import Flask,render_template,Response
 from cam_base import Base_Camera
 from flask import request
+import json
 # from motor_control import gimbal
 
 app = Flask(__name__)
@@ -18,8 +19,9 @@ def gen(camera):
 
 @app.route('/getmethod/<jsdata>')
 def get_javascript_data(jsdata):
+    return 12345
     # return json.loads(jsdata)
-    return jsdata
+    # return jsdata
 
 @app.route('/CruisingMode')
 def CruisingMode():
