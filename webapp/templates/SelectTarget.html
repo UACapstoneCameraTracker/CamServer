@@ -37,7 +37,7 @@
             var iniMousePos;
             var endMousePos;
 
-            var rectCan = c.getBoundingClientRect();
+
             c.addEventListener("click", function(evt) {
                 iniMousePos = getMousePos(c, evt);
 
@@ -46,13 +46,13 @@
                 c.addEventListener("mousemove", function(evt2) {
 
                     //endMousePos = getMousePos(c, evt);
-                    endMousePosx = evt2.clientX - rectCan.left;
-                    endMousePosy = evt2.clientY - rectCan.top;
+                    endMousePosX = evt2.clientX - iniMousePos.x;
+                    endMousePosY = evt2.clientY - iniMousePos.y;
                     ctx.clearRect(0, 0, 640, 480);
                     ctx.drawImage(x, 0, 0);
                     //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
                     ctx.beginPath();
-                    ctx.rect(iniMousePos.x, iniMousePos.y, endMousePosx, endMousePosy);
+                    ctx.rect(iniMousePos.x, iniMousePos.y, endMousePosX, endMousePosY);
                     ctx.stroke();
                 }, false);
             }, false);
