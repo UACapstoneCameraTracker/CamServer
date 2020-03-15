@@ -22,13 +22,18 @@
     <p>(Click and release Mouse on video to select a target end point)</p>
     <p>(To select a target to track)</p>
     <img id="videoFeed" src="{{ url_for('video_feed') }}" style="display: none;">
-    <canvas id="myCanvas" width="1280" height="720" style="border:1px solid #d3d3d3;">
+    <canvas id="myCanvas" width="640" height="480" style="border:1px solid #d3d3d3;">
 
     </canvas>
 
     <script>
         var c = document.getElementById("myCanvas");
         var ctx = c.getContext("2d");
+
+        var x = document.getElementById("videoFeed");
+        ctx.drawImage(videoFeed, 640, 480);
+
+
         c.addEventListener("click", function(evt) {
             var mousePos = getMousePos(c, evt);
             alert("push this to back end: " + mousePos.x + ',' + mousePos.y);
@@ -50,7 +55,7 @@
             //img.onload = function(){ 
             //   ctx.drawImage(img, 1280, 720);
             //}
-            //img.src = "/home/pi/fifo_img.jpg";
+            //img.src = "{{ url_for('video_feed') }}";
         }
     </script>
 
