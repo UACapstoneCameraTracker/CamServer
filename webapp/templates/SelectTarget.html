@@ -39,7 +39,7 @@
             c.addEventListener("click", function(evt) {
                 iniMousePos = getMousePos(c, evt);
                 //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
-                c.addEventListener("mousemove", function(evt) {
+                c.addEventListener("click", function(evt) {
 
                     endMousePos = getMousePos(c, evt);
                     ctx.clearRect(0, 0, 640, 480);
