@@ -50,12 +50,12 @@
         }
 
         window.onload = function() {
-            //var img = new Image();
+            var img = new Image();
 
-            //img.onload = function(){ 
-            //   ctx.drawImage(img, 1280, 720);
-            //}
-            //img.src = "{{ url_for('video_feed') }}";
+            img.onload = function() {
+                ctx.drawImage(img, 640, 480);
+            }
+            img.src = "{{ url_for('video_feed') }}";
         }
     </script>
 
