@@ -38,9 +38,7 @@
             var endMousePos;
 
             var rectCan = c.getBoundingClientRect();
-            c.addEventListener("click", clickListerFunc(evt));
-
-            function clickListerFunc(evt) {
+            c.addEventListener("click", function(evt) {
                 iniMousePos = getMousePos(c, evt);
 
 
@@ -57,8 +55,8 @@
                     ctx.rect(iniMousePos.x, iniMousePos.y, iniMousePosx, iniMousePosy);
                     ctx.stroke();
                 }, false);
+            }, false);
 
-            }
 
 
 
