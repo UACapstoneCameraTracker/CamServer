@@ -34,7 +34,7 @@
 
     <script>
         function selTraget() {
-            //location.reload();
+            location.reload();
             var c = document.getElementById("myCanvas");
             var ctx = c.getContext("2d");
 
@@ -124,6 +124,18 @@
                 y: evt.clientY - rect.top
             };
         }
+
+        function firstDraw() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+
+            var x = document.getElementById("videoFeed");
+            //x.style.display = "none"; // hide original image
+            ctx.drawImage(x, 0, 0, 640, 480);
+
+        }
+
+        window.addEventListener("load", firstDraw, false);
     </script>
 
     <br>
