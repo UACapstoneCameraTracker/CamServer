@@ -18,7 +18,8 @@ def gen(camera):
 
 @app.route('/getmethod/<jsdata>')
 def get_javascript_data(jsdata):
-    return json.loads(jsdata)
+    # return json.loads(jsdata)
+    return jsdata
 
 @app.route('/CruisingMode')
 def CruisingMode():
