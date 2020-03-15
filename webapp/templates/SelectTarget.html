@@ -36,17 +36,23 @@
             ctx.drawImage(x, 0, 0, 640, 480);
             var iniMousePos;
             var endMousePos;
+
+            var rectCan = c.getBoundingClientRect();
             c.addEventListener("click", function(evt) {
                 iniMousePos = getMousePos(c, evt);
-                //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
-                c.addEventListener("click", function(evt) {
 
-                    endMousePos = getMousePos(c, evt);
+
+                //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
+                c.addEventListener("mousemove", function(evt2) {
+
+                    //endMousePos = getMousePos(c, evt);
+                    endMousePosx = evt2.clientX - rectCan.left;
+                    endMousePosy = evt2.clientY - rectCan.top;
                     ctx.clearRect(0, 0, 640, 480);
                     ctx.drawImage(x, 0, 0);
                     //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
                     ctx.beginPath();
-                    ctx.rect(iniMousePos.x, iniMousePos.y, endMousePos.x, endMousePos.y);
+                    ctx.rect(iniMousePos.x, iniMousePos.y, endMousePosx, endMousePosy);
                     ctx.stroke();
                 }, false);
             }, false);
