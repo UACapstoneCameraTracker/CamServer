@@ -27,6 +27,10 @@
 
     </canvas>
 
+    <div id="idcaption">
+
+    </div>
+
     <script>
         function selTraget() {
             var c = document.getElementById("myCanvas");
@@ -57,9 +61,13 @@
 
                     c.addEventListener("click", function(evt) {
                         endMousePos = getMousePos(c, evt);
-                        alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y);
-                        window.location = "{{ url_for('index') }}";
-                        location.reload();
+                        //alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y);
+                        //window.location = "{{ url_for('index') }}";
+                        //location.reload();
+                        var caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y;
+                        document.getElementById("idcaption").innerHTML = caption;
+
+
                     }, false);
 
 
