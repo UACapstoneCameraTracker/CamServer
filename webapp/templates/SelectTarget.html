@@ -1,59 +1,37 @@
 <html>
-    <head>
-        <title>Camera Tracking System</title>
-        <link rel="stylesheet" href='/static/style.css' />
-    </head>
-    <body>
+
+<head>
+    <title>Camera Tracking System</title>
+    <link rel="stylesheet" href='/static/style.css' />
+    <script src="func.js" type="text/javascript"></script>
+
+</head>
+
+<body>
     <h1><span style="color:white; font-weight:bold">
         Camera
-        </span> 
+        </span>
         <span id="trackingg" style="border-radius: 5px;padding:5px 3px; color:black; background:#f90;font-weight:bold">
         Tracker
-        </span>  
-        
+        </span>
+
     </h1>
 
     <h2 style="color:white">Live Camera Feed</h2>
     <p>(Click and release Mouse on video to select a target beginning point)</p>
     <p>(Click and release Mouse on video to select a target end point)</p>
     <p>(To select a target to track)</p>
-    <img id ="videoFeed" src="{{ url_for('video_feed') }}"> 
+    <img id="videoFeed" src="{{ url_for('video_feed') }}" style="display: none;">
     <canvas id="myCanvas" width="1280" height="720" style="border:1px solid #d3d3d3;">
 
     </canvas>
 
-    <script>
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
-        c.addEventListener("click", function (evt) {
-        var mousePos = getMousePos(c, evt);
-        alert("push this to back end: "+mousePos.x + ',' + mousePos.y);
 
-        }, false);
-
-        //Get Mouse Position
-        function getMousePos(c, evt) {
-            var rect = c.getBoundingClientRect();
-            return {
-                x: evt.clientX - rect.left,
-                y: evt.clientY - rect.top
-            };
-        }
-
-        window.onload = function() {
-            //var img = new Image();
-
-            //img.onload = function(){ 
-            //   ctx.drawImage(img, 1280, 720);
-            //}
-            //img.src = "/home/pi/fifo_img.jpg";
-        }
-    </script>
 
     <br>
     <br>
     <br>
-    <a style = "text-decoration:none;" href="{{ url_for('CruisingMode') }}">
+    <a style="text-decoration:none;" href="{{ url_for('CruisingMode') }}">
         <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
         Go to Cruising Mode
         </span>
@@ -63,23 +41,24 @@
     <br>
     <br>
     <br>
-    
 
-    <a style = "text-decoration:none;" href="{{ url_for('ManualMode') }}">
+
+    <a style="text-decoration:none;" href="{{ url_for('ManualMode') }}">
         <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
         Go to Manual Mode
         </span>
     </a>
 
     <div>
-<br>
-<br>
-    <a style = "text-decoration:none;" href="{{ url_for('index') }}">
-        <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+        <br>
+        <br>
+        <a style="text-decoration:none;" href="{{ url_for('index') }}">
+            <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
         Return To Main Page
         </span>
-    </a>
-</div>
+        </a>
+    </div>
 
-    </body>
+</body>
+
 </html>
