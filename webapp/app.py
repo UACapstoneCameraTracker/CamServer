@@ -26,9 +26,10 @@ def gen(camera):
 @app.route('/postmethod', methods = ['POST'])
 def get_post_javascript_data():
     jsdata = request.form['javascript_data']
+    print(jsdata)
     return jsdata
 
-    
+
 @app.route('/CruisingMode')
 def CruisingMode():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
