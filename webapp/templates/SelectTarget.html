@@ -34,23 +34,21 @@
 
             var x = document.getElementById("videoFeed");
             ctx.drawImage(x, 0, 0, 640, 480);
-        }
 
+            c.addEventListener("click", function(evt) {
+                var mousePos = getMousePos(c, evt);
+                alert("push this to back end: " + mousePos.x + ',' + mousePos.y);
 
+            }, false);
 
-        c.addEventListener("click", function(evt) {
-            var mousePos = getMousePos(c, evt);
-            alert("push this to back end: " + mousePos.x + ',' + mousePos.y);
-
-        }, false);
-
-        //Get Mouse Position
-        function getMousePos(c, evt) {
-            var rect = c.getBoundingClientRect();
-            return {
-                x: evt.clientX - rect.left,
-                y: evt.clientY - rect.top
-            };
+            //Get Mouse Position
+            function getMousePos(c, evt) {
+                var rect = c.getBoundingClientRect();
+                return {
+                    x: evt.clientX - rect.left,
+                    y: evt.clientY - rect.top
+                };
+            }
         }
     </script>
 
