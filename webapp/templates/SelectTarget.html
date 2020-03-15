@@ -46,7 +46,7 @@
                 c.addEventListener("mousemove", function(evt) {
 
                     //endMousePos = getMousePos(c, evt);
-                    iniMousePosx = evt.clientX - iniMousePos.x - rect.left;
+                    iniMousePosx = evt.clientX - iniMousePos.x;
                     iniMousePosy = evt.clientY - iniMousePos.y - rect.top;
                     ctx.clearRect(0, 0, 640, 480);
                     ctx.drawImage(x, 0, 0);
