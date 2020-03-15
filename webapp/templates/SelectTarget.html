@@ -3,7 +3,7 @@
 <head>
     <title>Camera Tracking System</title>
     <link rel="stylesheet" href='/static/style.css' />
-    <script src="func.js" type="text/javascript"></script>
+
 
 </head>
 
@@ -58,7 +58,7 @@
                     c.addEventListener("click", function(evt) {
                         endMousePos = getMousePos(c, evt);
                         alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y);
-                        window.location.href = "index.html";
+                        window.location = "index.html";
                     }, false);
 
 
