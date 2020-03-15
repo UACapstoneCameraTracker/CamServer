@@ -23,16 +23,24 @@
     <p>(To select a target to track)</p>
     <img id="videoFeed" src="{{ url_for('video_feed') }}">
     <button onclick="selTraget()">Select Target</button>
+    <button onclick="reSel()">Reselect</button>
+    <div id="idcaption"></div>
     <canvas id="myCanvas" width="640" height="480"></canvas>
     <!-- <canvas id="myCanvas" width="640" height="480" style="border:1px solid #d3d3d3;"> -->
 
 
 
-    <div id="idcaption">
+
 
     </div>
 
     <script>
+        function reSel() {
+            location.reload();
+            selTraget();
+
+        }
+
         function selTraget() {
             //location.reload();
             var c = document.getElementById("myCanvas");
