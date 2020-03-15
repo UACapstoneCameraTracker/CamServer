@@ -45,9 +45,9 @@
                 //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
                 c.addEventListener("mousemove", function(evt) {
 
-                    //endMousePos = getMousePos(c, evt);
-                    iniMousePosx = evt.clientX - iniMousePos.x;
-                    iniMousePosy = evt.clientY - iniMousePos.y;
+                    endMousePos = getMousePos(c, evt);
+                    iniMousePosx = endMousePos.x - iniMousePos.x;
+                    iniMousePosy = endMousePos.y - iniMousePos.y;
                     ctx.clearRect(0, 0, 640, 480);
                     ctx.drawImage(x, 0, 0);
                     //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
