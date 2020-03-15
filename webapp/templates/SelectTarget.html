@@ -47,14 +47,15 @@
             var caption = "";
             c.addEventListener("click", function handler1(evt) {
                 iniMousePos = getMousePos(c, evt);
-                caption = " first-click " + caption;
-                document.getElementById("idcaption").innerHTML = caption;
+                console.log("first-click");
+                //caption = " first-click " + caption;
+                //document.getElementById("idcaption").innerHTML = caption;
 
                 //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
                 c.addEventListener("mousemove", function hander2(evt) {
-                    caption = " mouse-move " + caption;
-                    document.getElementById("idcaption").innerHTML = caption;
-
+                    //caption = " mouse-move " + caption;
+                    //document.getElementById("idcaption").innerHTML = caption;
+                    console.log("mouse-move");
                     endMousePos = getMousePos(c, evt);
                     iniMousePosx = endMousePos.x - iniMousePos.x;
                     iniMousePosy = endMousePos.y - iniMousePos.y;
@@ -72,11 +73,11 @@
                         //alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y);
                         //window.location = "{{ url_for('index') }}";
                         //location.reload();
-
+                        console.log("2 click");
                         caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y + " " + caption;
                         document.getElementById("idcaption").innerHTML = caption;
                         //this.removeEventListener('click', handler3);
-                        selTraget()
+
 
                         this.removeEventListener('mousemove', handler2);
 
@@ -89,12 +90,14 @@
 
 
                 }, false);
-
+                console.log("remove handler 1");
                 this.removeEventListener('click', handler1);
             }, false);
 
-            caption = "out side listener" + caption;
-            document.getElementById("idcaption").innerHTML = caption;
+            console.log("out side listener");
+
+            //caption = "out side listener" + caption;
+            //document.getElementById("idcaption").innerHTML = caption;
 
 
 
