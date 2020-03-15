@@ -42,12 +42,13 @@
             var endMousePos;
 
             var rectCan = c.getBoundingClientRect();
-            c.addEventListener("click", function(evt) {
+            c.addEventListener("click", function handler1(evt) {
                 iniMousePos = getMousePos(c, evt);
 
-
+                this.removeEventListener('click', handler1);
                 //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
-                c.addEventListener("mousemove", function(evt) {
+                c.addEventListener("mousemove", function hander2(evt) {
+
 
                     endMousePos = getMousePos(c, evt);
                     iniMousePosx = endMousePos.x - iniMousePos.x;
@@ -59,13 +60,15 @@
                     ctx.rect(iniMousePos.x, iniMousePos.y, iniMousePosx, iniMousePosy);
                     ctx.stroke();
 
-                    c.addEventListener("click", function(evt) {
+                    c.addEventListener("click", function hander3(evt) {
+                        this.removeEventListener('mousemove', handler2);
                         endMousePos = getMousePos(c, evt);
                         alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y);
                         //window.location = "{{ url_for('index') }}";
                         //location.reload();
                         var caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y;
                         document.getElementById("idcaption").innerHTML = caption;
+                        this.removeEventListener('click', handler3);
 
 
                     }, false);
@@ -81,6 +84,8 @@
 
 
         }
+
+
 
         //Get Mouse Position
         function getMousePos(c, evt) {
