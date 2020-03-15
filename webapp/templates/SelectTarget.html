@@ -43,13 +43,17 @@
             var endMousePos;
 
             var rectCan = c.getBoundingClientRect();
+
+            var caption = "";
             c.addEventListener("click", function handler1(evt) {
                 iniMousePos = getMousePos(c, evt);
-
+                caption = "first click" + caption;
+                document.getElementById("idcaption").innerHTML = caption;
 
                 //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
                 c.addEventListener("mousemove", function hander2(evt) {
-
+                    caption = "mouse move" + caption;
+                    document.getElementById("idcaption").innerHTML = caption;
 
                     endMousePos = getMousePos(c, evt);
                     iniMousePosx = endMousePos.x - iniMousePos.x;
@@ -63,12 +67,13 @@
 
                     c.addEventListener("click", function hander3(evt) {
 
+
                         endMousePos = getMousePos(c, evt);
                         //alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y);
                         //window.location = "{{ url_for('index') }}";
                         //location.reload();
                         this.removeEventListener('mousemove', handler2);
-                        var caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y;
+                        caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y + caption;
                         document.getElementById("idcaption").innerHTML = caption;
                         //this.removeEventListener('click', handler3);
                         selTraget()
@@ -85,6 +90,9 @@
 
                 this.removeEventListener('click', handler1);
             }, false);
+
+            caption = "out side listener" + caption;
+            document.getElementById("idcaption").innerHTML = caption;
 
 
 
