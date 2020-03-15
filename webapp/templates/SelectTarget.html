@@ -54,6 +54,13 @@
                     ctx.beginPath();
                     ctx.rect(iniMousePos.x, iniMousePos.y, iniMousePosx, iniMousePosy);
                     ctx.stroke();
+
+                    c.addEventListener("click", function(evt) {
+                        endMousePos = getMousePos(c, evt);
+                        alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos + "end y: " + endMousePos.y);
+                    }, false);
+
+
                 }, false);
             }, false);
 
