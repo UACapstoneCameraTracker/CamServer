@@ -90,7 +90,9 @@
                         //console.log("2 click");
                         caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y + " ";
                         document.getElementById("idcaption").innerHTML = caption;
-                        $.get("/getmethod/<javascript_data>");
+                        $.post("/postmethod", {
+                            javascript_data: caption
+                        });
                         //window.location.reload();
                         //location.reload();
                         //selTraget();

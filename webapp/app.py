@@ -17,12 +17,18 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n')
 
-@app.route('/getmethod/<jsdata>')
-def get_javascript_data(jsdata):
-    return 12345
-    # return json.loads(jsdata)
-    # return jsdata
+# @app.route('/getmethod/<jsdata>')
+# def get_javascript_data(jsdata):
+#     return 12345
+#     # return json.loads(jsdata)
+#     # return jsdata
 
+@app.route('/postmethod', methods = ['POST'])
+def get_post_javascript_data():
+    jsdata = request.form['javascript_data']
+    return jsdata
+
+    
 @app.route('/CruisingMode')
 def CruisingMode():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
