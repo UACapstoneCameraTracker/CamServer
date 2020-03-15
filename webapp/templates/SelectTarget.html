@@ -72,11 +72,13 @@
                         endMousePos = getMousePos(c, evt);
                         //alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y);
                         //window.location = "{{ url_for('index') }}";
-                        //location.reload();
+                        //
                         console.log("2 click");
-                        caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y + " " + caption;
+                        caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y + " ";
                         document.getElementById("idcaption").innerHTML = caption;
-                        selTraget();
+                        //window.location.reload();
+                        //location.reload();
+                        //selTraget();
                         //this.removeEventListener('click', handler3);
 
 
