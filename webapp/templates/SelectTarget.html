@@ -38,7 +38,10 @@
             var ctx = c.getContext("2d");
 
             var x = document.getElementById("videoFeed");
+            x.style.display = "none";
             ctx.drawImage(x, 0, 0, 640, 480);
+
+
             var iniMousePos;
             var endMousePos;
 
