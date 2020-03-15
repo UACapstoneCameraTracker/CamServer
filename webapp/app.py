@@ -1,5 +1,6 @@
 from flask import Flask,render_template,Response
 from cam_base import Base_Camera
+from flask import request
 # from motor_control import gimbal
 
 app = Flask(__name__)
@@ -14,6 +15,10 @@ def gen(camera):
         # frame = camera.get_frame_test()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n')
+
+@app.route('/getmethod/<jsdata>')
+def get_javascript_data(jsdata):
+    return json.loads(jsdata)
 
 @app.route('/CruisingMode')
 def CruisingMode():
