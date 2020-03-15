@@ -45,7 +45,7 @@
             c.addEventListener("click", function handler1(evt) {
                 iniMousePos = getMousePos(c, evt);
 
-                this.removeEventListener('click', handler1);
+
                 //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
                 c.addEventListener("mousemove", function hander2(evt) {
 
@@ -61,7 +61,7 @@
                     ctx.stroke();
 
                     c.addEventListener("click", function hander3(evt) {
-                        this.removeEventListener('mousemove', handler2);
+
                         endMousePos = getMousePos(c, evt);
                         alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y);
                         //window.location = "{{ url_for('index') }}";
@@ -72,9 +72,12 @@
 
 
                     }, false);
+                    this.removeEventListener('mousemove', handler2);
 
 
                 }, false);
+
+                this.removeEventListener('click', handler1);
             }, false);
 
 
