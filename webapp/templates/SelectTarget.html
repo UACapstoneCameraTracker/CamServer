@@ -47,7 +47,7 @@
                 endMousePos = getMousePos(c, evt);
                 //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
                 ctx.beginPath();
-                ctx.rect(iniMousePos.x, iniMousePos.y, endMousePos.x, endMousePos.y);
+                ctx.rect(iniMousePos.x, iniMousePos.y, endMousePos.y, endMousePos.x);
                 ctx.stroke();
             }, false);
 
