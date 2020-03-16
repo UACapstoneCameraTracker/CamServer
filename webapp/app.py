@@ -26,7 +26,14 @@ def gen(camera):
 @app.route('/postmethod', methods = ['POST'])
 def get_post_javascript_data():
     jsdata = request.form['javascript_data']
-    # print(jsdata)
+    print(jsdata)
+    coorArray = jsdata.split()
+    x1 = coorArray[0]
+    y1 = coorArray[1]
+    x2 = coorArray[2]
+    y2 = coorArray[3]
+
+    print("x1: "+ x1 + " y1: "+ y1 + " x2: "+ x2 + " y2:"+ y2)
     return jsdata
 
 

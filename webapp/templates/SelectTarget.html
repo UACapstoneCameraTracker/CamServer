@@ -26,6 +26,7 @@
     <br>
     <button onclick="selTraget()">Select Target</button>
     <button onclick="reSel()">Refresh</button>
+    <button onclick="subData()">Submit</button>
     <div id="idcaption"></div>
     <canvas id="myCanvas" width="640" height="480"></canvas>
     <!-- <canvas id="myCanvas" width="640" height="480" style="border:1px solid #d3d3d3;"> -->
@@ -37,10 +38,21 @@
     </div>
 
     <script>
+        var iniMousePos;
+        var endMousePos;
+        var subD;
+
         function reSel() {
             location.reload();
 
 
+        }
+
+
+        function subData() {
+            $.post("/postmethod", {
+                javascript_data: subD
+            });
         }
 
         function selTraget() {
@@ -53,8 +65,7 @@
             ctx.drawImage(x, 0, 0, 640, 480);
 
 
-            var iniMousePos;
-            var endMousePos;
+
 
             var rectCan = c.getBoundingClientRect();
 
@@ -90,9 +101,10 @@
                         //console.log("2 click");
                         caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y + " ";
                         document.getElementById("idcaption").innerHTML = caption;
-                        $.post("/postmethod", {
-                            javascript_data: caption
-                        });
+                        subD = iniMousePos.x + " " + iniMousePos.y + " " + endMousePos.x + " " + endMousePos.y;
+                        //$.post("/postmethod", {
+                        //    javascript_data: caption
+                        //});
                         //window.location.reload();
                         //location.reload();
                         //selTraget();
