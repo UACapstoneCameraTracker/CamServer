@@ -27,7 +27,7 @@ def gen(camera):
 def get_post_javascript_data():
     jsdata = request.form['javascript_data']
     print(jsdata)
-    return jsdata
+    # return jsdata
 
 
 @app.route('/CruisingMode')
