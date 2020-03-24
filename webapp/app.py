@@ -1,21 +1,26 @@
-from flask import Flask,render_template,Response
-from cam_base import Base_Camera
+from flask import Flask, render_template, Response
+from camera import Camera
 from flask import request
 import json
 # from motor_control import gimbal
 
 app = Flask(__name__)
 
+
+def streaming():
+    camera = Camera()
+    while True:
+        frame = camera.get_frame()
+        if len(frame) > 0:
+            # frame = camera.get_frame_test()
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-def gen(camera):
-    while True:
-        frame = camera.get_frame()
-        # frame = camera.get_frame_test()
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpg\r\n\r\n' + frame + b'\r\n')
 
 # @app.route('/getmethod/<jsdata>')
 # def get_javascript_data(jsdata):
@@ -23,7 +28,8 @@ def gen(camera):
 #     # return json.loads(jsdata)
 #     # return jsdata
 
-@app.route('/postmethod', methods = ['POST'])
+
+@app.route('/postmethod', methods=['POST'])
 def get_post_javascript_data():
     jsdata = request.form['javascript_data']
     print(jsdata)
@@ -33,7 +39,7 @@ def get_post_javascript_data():
     x2 = coorArray[2]
     y2 = coorArray[3]
 
-    print("x1: "+ x1 + " y1: "+ y1 + " x2: "+ x2 + " y2:"+ y2)
+    print("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2:" + y2)
     return jsdata
 
 
@@ -42,10 +48,12 @@ def CruisingMode():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     return render_template('CruisingMode.html')
 
+
 @app.route('/ManualMode')
 def ManualMode():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     return render_template('ManualMode.html')
+
 
 @app.route('/turnleft')
 def turnleft():
@@ -54,17 +62,20 @@ def turnleft():
     return render_template('ManualMode.html')
     # return "nothing"
 
+
 @app.route('/turnright')
 def turnright():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     print("call motor to turn right ")
     return render_template('ManualMode.html')
 
+
 @app.route('/turnup')
 def turnup():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     print("call motor to turn up ")
     return render_template('ManualMode.html')
+
 
 @app.route('/turndown')
 def turndown():
@@ -73,6 +84,7 @@ def turndown():
     return render_template('ManualMode.html')
     # return "nothing"
 
+
 @app.route('/stopturning')
 def stopturning():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
@@ -80,14 +92,16 @@ def stopturning():
     return render_template('ManualMode.html')
     # return "nothing"
 
+
 @app.route('/SelectTarget')
 def SelectTarget():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     return render_template('SelectTarget.html')
 
+
 @app.route('/video_feed')
 def video_feed():
-    return Response(gen(Base_Camera()),
+    return Response(streaming(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
 # The secret to implement in-place updates is to use a multipart response.
 # Multipart responses consist of a header that includes one of the multipart content types,
