@@ -12,6 +12,8 @@ app = Flask(__name__)
 gimbal.init_gimbal((360,640))
 camera = Camera()
 
+FIFO_PATH_CMD = '/home/pi/fifo_cmd'
+
 
 def streaming():
     global camera
@@ -45,9 +47,37 @@ def get_post_javascript_data():
     y1 = coorArray[1]
     x2 = coorArray[2]
     y2 = coorArray[3]
-
     print("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2:" + y2)
     return jsdata
+
+
+@app.route('/SendPost', methods=['POST'])
+def Send_post():
+    jsdata = request.form['javascript_data']
+    # print(jsdata)
+    coorArray = jsdata.split()
+    x1 = coorArray[0]
+    y1 = coorArray[1]
+    x2 = coorArray[2]
+    y2 = coorArray[3]
+    # print("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2:" + y2)
+    
+    cod1 = string(int(float(x1)))
+    cod2 = string(int(float(y1)))
+    width = string(int(float(x2)-float(x1)))
+    height = string(int(float(y2)-float(y1)))
+
+    cmd = "select target"
+    bbox = cod1+","+cod2+","+lenth+","+width
+    with open(FIFO_PATH_CMD, 'w') as fifo:
+        fifo.flush()
+        fifo.write(cmd)
+        fifo.write('\n')
+        fifo.write(bbox)
+
+    fifo.close()
+
+    return None
 
 
 @app.route('/CruisingMode')
@@ -61,13 +91,25 @@ def ManualMode():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     return render_template('ManualMode.html')
 
+def send_moving_cmd(moving_cmd):
+    cmd = "manual"
+    with open(FIFO_PATH_CMD, 'w') as fifo:
+        fifo.flush()
+        fifo.write(cmd)
+        fifo.write('\n')
+        fifo.write(moving_cmd)
+
+    fifo.close()
+
 
 @app.route('/turnleft')
 def turnleft():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
+    
     print("call motor to turn left ")
-    
-    
+
+    send_moving_cmd("start")
+
     gimbal.move_to((-100,0))
     return render_template('ManualMode.html')
     # return "nothing"
@@ -76,6 +118,7 @@ def turnleft():
 @app.route('/turnright')
 def turnright():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
+    send_moving_cmd("start")
     gimbal.move_to((100,0))
     print("call motor to turn right ")
     return render_template('ManualMode.html')
@@ -84,6 +127,7 @@ def turnright():
 @app.route('/turnup')
 def turnup():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
+    send_moving_cmd("start")
     gimbal.move_to((0,100))
     print("call motor to turn up ")
     return render_template('ManualMode.html')
@@ -92,6 +136,7 @@ def turnup():
 @app.route('/turndown')
 def turndown():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
+    send_moving_cmd("start")
     print("call motor to turn down ")
     gimbal.move_to((0,-100))
     return render_template('ManualMode.html')
@@ -102,6 +147,7 @@ def turndown():
 def stopturning():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     print("call motor to stop turning ")
+    send_moving_cmd("stop")
     gimbal.init_gimbal((360,640))
     return render_template('ManualMode.html')
     # return "nothing"
