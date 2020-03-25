@@ -50,6 +50,46 @@ def get_post_javascript_data():
     return jsdata
 
 
+@app.route('/postmethodLeft', methods=['POST'])
+def get_post_javascript_datal():
+    jsdata = request.form['javascript_data']
+    print("manual turning: ")
+    print(jsdata)
+    print("call gimbal.move_to((-100,0)) or switch to pipe later ")
+    
+    return jsdata
+
+@app.route('/postmethodright', methods=['POST'])
+def get_post_javascript_datar():
+    jsdata = request.form['javascript_data']
+    print("manual turning: ")
+    print(jsdata)
+    print("call gimbal.move_to( .... ) or switch to pipe later ")
+    
+    return jsdata
+
+
+@app.route('/postmethodup', methods=['POST'])
+def get_post_javascript_datau():
+    jsdata = request.form['javascript_data']
+    print("manual turning: ")
+    print(jsdata)
+    print("call gimbal.move_to(.... ) or switch to pipe later ")
+    
+    return jsdata
+
+
+@app.route('/postmethoddown', methods=['POST'])
+def get_post_javascript_datad():
+    jsdata = request.form['javascript_data']
+    print("manual turning: ")
+    print(jsdata)
+    print("call gimbal.move_to(.... ) or switch to pipe later ")
+    
+    return jsdata
+
+
+
 @app.route('/CruisingMode')
 def CruisingMode():
     # send a signal to motorcontroller/otherthings to alert camera to change mode

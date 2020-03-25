@@ -2,6 +2,7 @@
     <head>
         <title>Camera Tracking System</title>
         <link rel="stylesheet" href='/static/style.css' />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
     <h1><a style = "text-decoration:none;" href="{{ url_for('index') }}">
@@ -23,10 +24,13 @@
     <div class="btn-group">
         <p>Click Button to Turn Camera Right/Left or Up/Down</p>
 
-        <button onclick="TurnLeft()" id = "selectBTN" class="selectButton">Click to Select Target</button>
+        <button onclick="TurnLeft()" id = "selectBTNl" class="selectButton">Turn Left</button>
+        <button onclick="TurnRight()" id = "selectBTNr" class="selectButton">Turn Right</button>
+        <button onclick="TurnUp()" id = "selectBTNu" class="selectButton">Turn Up</button>
+        <button onclick="TurnDown()" id = "selectBTNd" class="selectButton">Turn Down</button>
 
         
-        <a style = "text-decoration:none;" href="{{ url_for('turnleft') }}">
+        <!-- <a style = "text-decoration:none;" href="{{ url_for('turnleft') }}">
             <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
             Turn  Left
             </span>
@@ -56,9 +60,9 @@
             <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
             Turn  Down
             </span>
-        </a>
+        </a> -->
     
-        <br>
+        <!-- <br>
         <br>
         
         <br>
@@ -69,9 +73,50 @@
             <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
             Stop Turning
             </span>
-        </a>
+        </a> -->
 
     </div>
+
+    <script>
+        function TurnLeft(){
+            var subD = "left";
+            $.post("/postmethodLeft", {
+                javascript_data: subD
+            });
+        
+        }
+
+        function TurnRight(){
+            var subD = "right";
+            $.post("/postmethodright", {
+                javascript_data: subD
+            });
+        
+        }
+
+        function TurnUp(){
+            var subD = "up";
+            $.post("/postmethodup", {
+                javascript_data: subD
+            });
+        
+        }
+
+        function TurnDown(){
+            var subD = "down";
+            $.post("/postmethoddown", {
+                javascript_data: subD
+            });
+        
+        }
+
+        
+
+
+
+
+
+    </script>
 <br>
 <br>
 <br>
