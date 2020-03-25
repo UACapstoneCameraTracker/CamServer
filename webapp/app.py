@@ -4,15 +4,22 @@ from flask import request
 import json
 # from motor_control import gimbal
 
+from motor_control import gimbal
+
+
+
 app = Flask(__name__)
+gimbal.init_gimbal((360,640))
+camera = Camera()
 
 
 def streaming():
-    camera = Camera()
+    global camera
     while True:
         frame = camera.get_frame()
+        # frame = camera.get_frame_test()
         if len(frame) > 0:
-            # frame = camera.get_frame_test()
+            
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
@@ -59,6 +66,9 @@ def ManualMode():
 def turnleft():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     print("call motor to turn left ")
+    
+    
+    gimbal.move_to((-100,0))
     return render_template('ManualMode.html')
     # return "nothing"
 
@@ -66,6 +76,7 @@ def turnleft():
 @app.route('/turnright')
 def turnright():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
+    gimbal.move_to((100,0))
     print("call motor to turn right ")
     return render_template('ManualMode.html')
 
@@ -73,6 +84,7 @@ def turnright():
 @app.route('/turnup')
 def turnup():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
+    gimbal.move_to((0,100))
     print("call motor to turn up ")
     return render_template('ManualMode.html')
 
@@ -81,6 +93,7 @@ def turnup():
 def turndown():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     print("call motor to turn down ")
+    gimbal.move_to((0,-100))
     return render_template('ManualMode.html')
     # return "nothing"
 
@@ -89,6 +102,7 @@ def turndown():
 def stopturning():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
     print("call motor to stop turning ")
+    gimbal.init_gimbal((360,640))
     return render_template('ManualMode.html')
     # return "nothing"
 
@@ -116,3 +130,4 @@ def video_feed():
 # so under the same wifi, ie, http://192.168.1.64:5000 to connect
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+    
