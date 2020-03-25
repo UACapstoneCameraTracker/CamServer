@@ -16,59 +16,62 @@
     </h1>
 
     <h2 style="color:white">Manual Mode Camera Feed</h2>
-    <img src="{{ url_for('video_feed') }}">
+    <img src="{{ url_for('video_feed') }}" height="480" width="640">
     <br>
     <br>
-<div class="btn-group">
-    <p>Click Button to Turn Camera Right/Left or Up/Down</p>
 
+    <div class="btn-group">
+        <p>Click Button to Turn Camera Right/Left or Up/Down</p>
+
+        <button onclick="TurnLeft()" id = "selectBTN" class="selectButton">Click to Select Target</button>
+
+        
+        <a style = "text-decoration:none;" href="{{ url_for('turnleft') }}">
+            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+            Turn  Left
+            </span>
+        </a>
+
+        <span style="width:50px;display:inline-block"></span>
+
+        <a style = "text-decoration:none;" href="{{ url_for('turnright') }}">
+            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+            Turn Right
+            </span>
+        </a>
+
+        <span style="width:50px;display:inline-block"></span>
+        
+
+
+        <a style = "text-decoration:none;" href="{{ url_for('turnup') }}">
+            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+            Turn   Up
+            </span>
+        </a>
+
+        <span style="width:50px;display:inline-block"></span>
+
+        <a style = "text-decoration:none;" href="{{ url_for('turndown') }}">
+            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+            Turn  Down
+            </span>
+        </a>
     
-    <a style = "text-decoration:none;" href="{{ url_for('turnleft') }}">
-        <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-        Turn  Left
-        </span>
-    </a>
+        <br>
+        <br>
+        
+        <br>
+        <br>
+        <br>
 
-    <span style="width:50px;display:inline-block"></span>
+        <a style = "text-decoration:none;" href="{{ url_for('stopturning') }}">
+            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+            Stop Turning
+            </span>
+        </a>
 
-    <a style = "text-decoration:none;" href="{{ url_for('turnright') }}">
-        <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-        Turn Right
-        </span>
-    </a>
-
-    <span style="width:50px;display:inline-block"></span>
-    
-
-
-    <a style = "text-decoration:none;" href="{{ url_for('turnup') }}">
-        <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-        Turn   Up
-        </span>
-    </a>
-
-    <span style="width:50px;display:inline-block"></span>
-
-    <a style = "text-decoration:none;" href="{{ url_for('turndown') }}">
-        <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-        Turn  Down
-        </span>
-    </a>
-   
-    <br>
-    <br>
-    
-    <br>
-    <br>
-    <br>
-
-    <a style = "text-decoration:none;" href="{{ url_for('stopturning') }}">
-        <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-        Stop Turning
-        </span>
-    </a>
-
-</div>
+    </div>
 <br>
 <br>
 <br>

@@ -1,130 +1,143 @@
+
 <html>
 
-<head>
-    <title>Camera Tracking System</title>
-    <link rel="stylesheet" href='/static/style.css' />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
-</head>
-
-<body>
-    <h1><a style = "text-decoration:none;" href="{{ url_for('index') }}">
-        <span style="color:white; background:black; font-weight:bold">
-        Camera
-        </span>
-        <span id="trackingg" style="border-radius: 5px;padding:2px 3px; color:black; background:#f90;font-weight:bold">
-        Tracker
-        </span>
-        </a>
-
-    </h1>
-
-    <h2 style="color:white">Live Camera Feed</h2>
-    <p>(Click and release Mouse on video to select a target beginning point)</p>
-    <p>(Click and release Mouse on video to select a target end point)</p>
-    <p>(To select a target to track)</p>
-    <img id="videoFeed" src="{{ url_for('video_feed') }}">
-    <br>
-    <button onclick="selTraget()">Select Target</button>
-    <button onclick="reSel()">Refresh</button>
-    <button onclick="subData()">Submit</button>
-    <div id="idcaption"></div>
-    <canvas id="myCanvas" width="640" height="480"></canvas>
-    <!-- <canvas id="myCanvas" width="640" height="480" style="border:1px solid #d3d3d3;"> -->
-
-
-
-
-
-    </div>
-
-    <script>
-        var iniMousePos;
-        var endMousePos;
-        var subD;
-
-        function reSel() {
-            location.reload();
-
-
-        }
-
-
-        function subData() {
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-
-            var x = document.getElementById("videoFeed");
-
-            var lengthRec = endMousePos.x - iniMousePos.x;
-            var heightRec = endMousePos.y - iniMousePos.y;
-
-            ctx.clearRect(0, 0, 640, 480);
-            ctx.drawImage(x, 0, 0);
-            //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
-            ctx.beginPath();
-            ctx.rect(iniMousePos.x, iniMousePos.y, lengthRec, heightRec);
-            ctx.stroke();
-
-
-
-            $.post("/postmethod", {
-                javascript_data: subD
-            });
-        }
-
-        function selTraget() {
-            //location.reload();
-            //iniMousePos.x = 0;
-            //iniMousePos.y = 0;
-            //endMousePos.x = 0;
-            //endMousePos.y = 0;
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-
-            var x = document.getElementById("videoFeed");
-            //x.style.display = "none"; // hide original image
-            ctx.drawImage(x, 0, 0, 640, 480);
-
-
-
-
-            var rectCan = c.getBoundingClientRect();
-
-            var caption = "";
-            c.addEventListener("click", function handler1(evt) {
-                iniMousePos = getMousePos(c, evt);
-                console.log("first-click");
-                //caption = " first-click " + caption;
-                //document.getElementById("idcaption").innerHTML = caption;
-
+    <head>
+        <title>Camera Tracking System</title>
+        <link rel="stylesheet" href='/static/style.css' />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    
+    </head>
+    
+    <body>
+        <h1><a style = "text-decoration:none;" href="/">
+            <span style="color:white; background:black; font-weight:bold">
+            Camera
+            </span>
+            <span id="trackingg" style="border-radius: 5px;padding:2px 3px; color:black; background:#f90;font-weight:bold">
+            Tracker
+            </span>
+            </a>
+    
+        </h1>
+    
+        <h2 style="color:white">Live Camera Feed</h2>
+        <p>(To select a target to track)</p>
+        <p>(Click and release Mouse on video to select a target's beginning point)</p>
+        <p>(Click and release Mouse on video to select a target end point)</p>
+        
+        <img id="videoFeed" src="/video_feed" height="360" width="640">
+        <br>
+        <button onclick="selTraget()" id = "selectBTN" class="selectButton">Click to Select Target</button>
+        <button onclick="reSel()" class="selectButton">Refresh</button>
+        <!-- <button onclick="subData()">Submit</button> -->
+        <div id="idcaption"></div>
+        <canvas id="myCanvas" width="640" height="360"></canvas>
+        <!-- <canvas id="myCanvas" width="640" height="480" style="border:1px solid #d3d3d3;"> -->
+    
+    
+    
+    
+    
+        </div>
+    
+        <script>
+            var iniMousePos;
+            var endMousePos;
+            var subD;
+    
+            function reSel() {
+                location.reload();
+    
+    
+            }
+    
+    
+            function subData() {
+                var c = document.getElementById("myCanvas");
+                var ctx = c.getContext("2d");
+    
+                var x = document.getElementById("videoFeed");
+    
+                var lengthRec = endMousePos.x - iniMousePos.x;
+                var heightRec = endMousePos.y - iniMousePos.y;
+    
+                ctx.clearRect(0, 0, 640, 360);
+                ctx.drawImage(x, 0, 0, 640, 360);
                 //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
-                c.addEventListener("mousemove", function hander2(evt) {
-                    //caption = " mouse-move " + caption;
+                ctx.beginPath();
+                ctx.rect(iniMousePos.x, iniMousePos.y, lengthRec, heightRec);
+                ctx.stroke();
+                //selTraget();
+    
+    
+    
+                $.post("/postmethod", {
+                    javascript_data: subD
+                });
+            }
+    
+            function selTraget() {
+                
+                var c = document.getElementById("myCanvas");
+                var ctx = c.getContext("2d");
+    
+                var x = document.getElementById("videoFeed");
+                //x.style.display = "none"; // hide original image
+                ctx.drawImage(x, 0, 0, 640, 360);
+    
+    
+    
+    
+                var rectCan = c.getBoundingClientRect();
+    
+                var caption = "";
+                c.addEventListener("click", function handler1(evt) {
+                    iniMousePos = getMousePos(c, evt);
+                    console.log("first-click");
+                    //caption = " first-click " + caption;
                     //document.getElementById("idcaption").innerHTML = caption;
-                    console.log("mouse-move");
-                    endMousePos = getMousePos(c, evt);
-                    var lengthRec = endMousePos.x - iniMousePos.x;
-                    var heightRec = endMousePos.y - iniMousePos.y;
-                    ctx.clearRect(0, 0, 640, 480);
-                    ctx.drawImage(x, 0, 0);
+    
                     //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
-                    ctx.beginPath();
-                    ctx.rect(iniMousePos.x, iniMousePos.y, lengthRec, heightRec);
-                    ctx.stroke();
-
-                    c.addEventListener("click", function hander3(evt) {
-
-
+                    c.addEventListener("mousemove", function handler2(evt) {
+                        //caption = " mouse-move " + caption;
+                        //document.getElementById("idcaption").innerHTML = caption;
+                        console.log("mouse-move");
+                        endMousePos = getMousePos(c, evt);
+                        var lengthRec = endMousePos.x - iniMousePos.x;
+                        var heightRec = endMousePos.y - iniMousePos.y;
+                        ctx.clearRect(0, 0, 640, 360);
+                        ctx.drawImage(x, 0, 0, 640, 360);
+                        //alert("push this to back end: " + iniMousePos.x + ',' + iniMousePos.y);
+                        ctx.beginPath();
+                        ctx.rect(iniMousePos.x, iniMousePos.y, lengthRec, heightRec);
+                        ctx.stroke();
+    
+    
+                    }, false);
+    
+                    c.addEventListener("click", function handler3(evt) {
+    
+    
                         endMousePos = getMousePos(c, evt);
                         //alert("push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y);
-                        //window.location = "{{ url_for('index') }}";
+                        //window.location = "/";
                         //
                         //console.log("2 click");
                         caption = "push this to back end: ini x: " + iniMousePos.x + "ini y: " + iniMousePos.y + "end x: " + endMousePos.x + "end y: " + endMousePos.y + " ";
                         document.getElementById("idcaption").innerHTML = caption;
                         subD = iniMousePos.x + " " + iniMousePos.y + " " + endMousePos.x + " " + endMousePos.y;
+                        //subData();
+                        this.removeEventListener('click', handler3);
+                        // c.removeEventListener('click', handler2);
+    
+                        c.parentElement.innerHTML = c.parentElement.innerHTML;
+                        subData();
+                        var btnn = document.getElementById("selectBTN");
+                        btnn.innerText = "Click to Select Again";
+                        //btnn.style.display = "none";
+    
+    
                         //$.post("/postmethod", {
                         //    javascript_data: caption
                         //});
@@ -132,92 +145,88 @@
                         //location.reload();
                         //selTraget();
                         //this.removeEventListener('click', handler3);
-
-
+    
+    
                         //c.removeEventListener('mousemove', handler2); // undifined handler2 in this scope
-
-
-
+    
+    
+    
                     }, false);
-
-
-
-
-
+    
+                    console.log("remove handler 1");
+                    this.removeEventListener('click', handler1);
+    
                 }, false);
-                console.log("remove handler 1");
-                this.removeEventListener('click', handler1);
-            }, false);
-
-            console.log("out side listener");
-
-            //caption = "out side listener" + caption;
-            //document.getElementById("idcaption").innerHTML = caption;
-
-
-
-
-
-
-
-        }
-
-
-
-        //Get Mouse Position
-        function getMousePos(c, evt) {
-            var rect = c.getBoundingClientRect();
-            return {
-                x: evt.clientX - rect.left,
-                y: evt.clientY - rect.top
-            };
-        }
-
-        function firstDraw() {
-            var c = document.getElementById("myCanvas");
-            var ctx = c.getContext("2d");
-
-            var x = document.getElementById("videoFeed");
-            //x.style.display = "none"; // hide original image
-            ctx.drawImage(x, 0, 0, 640, 480);
-            //selTraget();
-
-        }
-
-        //window.addEventListener("load", firstDraw, false);
-    </script>
-
-    <br>
-    <br>
-    <br>
-    <a style="text-decoration:none;" href="{{ url_for('CruisingMode') }}">
-        <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-        Go to Cruising Mode
-        </span>
-    </a>
-
-    <br>
-    <br>
-    <br>
-    <br>
-
-
-    <a style="text-decoration:none;" href="{{ url_for('ManualMode') }}">
-        <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-        Go to Manual Mode
-        </span>
-    </a>
-
-    <div>
+    
+                console.log("outside all listener");
+    
+                //caption = "out side listener" + caption;
+                //document.getElementById("idcaption").innerHTML = caption;
+    
+    
+    
+    
+    
+    
+    
+            }
+    
+    
+    
+            //Get Mouse Position
+            function getMousePos(c, evt) {
+                var rect = c.getBoundingClientRect();
+                return {
+                    x: evt.clientX - rect.left,
+                    y: evt.clientY - rect.top
+                };
+            }
+    
+            function firstDraw() {
+                var c = document.getElementById("myCanvas");
+                var ctx = c.getContext("2d");
+    
+                var x = document.getElementById("videoFeed");
+                //x.style.display = "none"; // hide original image
+                ctx.drawImage(x, 0, 0, 640, 480);
+                //selTraget();
+    
+            }
+    
+            //window.addEventListener("load", firstDraw, false);
+        </script>
+    
         <br>
         <br>
-        <a style="text-decoration:none;" href="{{ url_for('index') }}">
-            <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-        Return To Main Page
-        </span>
+        <br>
+        <a style="text-decoration:none;" href="/CruisingMode">
+            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+            Go to Cruising Mode
+            </span>
         </a>
-    </div>
-
-</body>
-
-</html>
+    
+        <br>
+        <br>
+        <br>
+        <br>
+    
+    
+        <a style="text-decoration:none;" href="/ManualMode">
+            <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+            Go to Manual Mode
+            </span>
+        </a>
+    
+        <div>
+            <br>
+            <br>
+            <a style="text-decoration:none;" href="/">
+                <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
+            Return To Main Page
+            </span>
+            </a>
+        </div>
+    
+    </body>
+    
+    </html>

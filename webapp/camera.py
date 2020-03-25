@@ -4,10 +4,11 @@ FIFO_PATH = '/home/pi/fifo_img.jpg'
 
 
 class Camera(object):
-    def __init__(self):
-        self.pipe = open(FIFO_PATH, 'rb')
+    # def __init__(self):
+        # self.pipe = open(FIFO_PATH, 'rb')
 
     def get_frame(self):
+        self.pipe = open(FIFO_PATH, 'rb')
         # int time() returns 1582079059
         # return self.frames[int(time.time()) % 3]
         frames = self.pipe.read()

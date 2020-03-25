@@ -6,3 +6,19 @@ body {
     font-family: Arial,Helvetica,sans-serif;
     
 }
+
+
+.selectButton {
+    color: black;
+    text-align: center;
+    background-color: #f90;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 15px;
+    margin: 3px 3px;
+    padding: 10px 17px;
+    cursor: pointer;
+}
+.selectButton:hover {
+    background-color: #556fcf;
+}
