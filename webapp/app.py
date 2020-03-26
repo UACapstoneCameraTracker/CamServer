@@ -1,10 +1,14 @@
+import os
+from pathlib import Path
 from flask import Flask, render_template, Response
 from camera import Camera
 from flask import request
 import json
 from motor_control import gimbal
+import time
 IMG_SIZE = (640, 360)
-FIFO_PATH_CMD = '/home/pi/fifo_cmd'
+
+CMD_FIFO_PATH = '/home/pi/fifo_cmd'
 
 
 
@@ -33,6 +37,9 @@ def index():
 
 @app.route('/postmethod', methods=['POST'])
 def get_post_javascript_data():
+    if not Path(CMD_FIFO_PATH).exists():
+        os.mkfifo(CMD_FIFO_PATH)
+
     jsdata = request.form['javascript_data']
     print(jsdata)
     coorArray = jsdata.split()
@@ -49,14 +56,11 @@ def get_post_javascript_data():
     cmd = "select target"
     bbox = x1+","+y2+","+height+","+width
 
-    with open(FIFO_PATH_CMD, 'w') as fifo:
+    with open(CMD_FIFO_PATH, 'w') as fifo:
         fifo.flush()
         fifo.write(cmd)
         fifo.write('\n')
         fifo.write(bbox)
-
-    fifo.close()
-
 
     return jsdata
 
@@ -65,7 +69,7 @@ def get_post_javascript_datares():
     jsdata = request.form['javascript_data']
     print("manual turning: ")
     print(jsdata)
-
+    send_moving_cmd("start")
     print("call gimbal ini to reset ")
     gimbal.init_gimbal(IMG_SIZE)
 
@@ -76,9 +80,10 @@ def get_post_javascript_datal():
     jsdata = request.form['javascript_data']
     print("manual turning: left")
     print(jsdata)
-
+    send_moving_cmd("start")
     print("call gimbal.move_to((....)) or switch to pipe later ")
     gimbal.move_to((-IMG_SIZE[0]/4, IMG_SIZE[1]/2))
+    send_moving_cmd("stop")
 
     return jsdata
 
@@ -87,8 +92,10 @@ def get_post_javascript_datar():
     jsdata = request.form['javascript_data']
     print("manual turning: right")
     print(jsdata)
+    send_moving_cmd("start")
     print("call gimbal.move_to( .... ) or switch to pipe later ")
     gimbal.move_to((IMG_SIZE[0]*3/4, IMG_SIZE[1]/2))
+    send_moving_cmd("stop")
 
     return jsdata
 
@@ -98,8 +105,10 @@ def get_post_javascript_datau():
     jsdata = request.form['javascript_data']
     print("manual turning: up")
     print(jsdata)
+    send_moving_cmd("start")
     print("call gimbal.move_to(.... ) or switch to pipe later ")
     gimbal.move_to((IMG_SIZE[0]/2, IMG_SIZE[1]/4))
+    send_moving_cmd("stop")
 
     return jsdata
 
@@ -109,9 +118,11 @@ def get_post_javascript_datad():
     jsdata = request.form['javascript_data']
     print("manual turning: down")
     print(jsdata)
+    send_moving_cmd("start")
     print("call gimbal.move_to(.... ) or switch to pipe later ")
     gimbal.move_to((IMG_SIZE[0]/2, IMG_SIZE[1]*3/4))
-
+    send_moving_cmd("stop")
+    
     return jsdata
 
 
@@ -148,14 +159,15 @@ def video_feed():
 
 
 def send_moving_cmd(moving_cmd):
+    if not Path(CMD_FIFO_PATH).exists():
+        os.mkfifo(CMD_FIFO_PATH)
+
     cmd = "manual"
-    with open(FIFO_PATH_CMD, 'w') as fifo:
+    with open(CMD_FIFO_PATH, 'w') as fifo:
         fifo.flush()
         fifo.write(cmd)
         fifo.write('\n')
         fifo.write(moving_cmd)
-
-    fifo.close()
 
 
 if __name__ == '__main__':
