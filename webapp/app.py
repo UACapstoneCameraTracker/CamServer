@@ -40,14 +40,14 @@ def get_post_javascript_data():
     y1 = coorArray[1]
     x2 = coorArray[2]
     y2 = coorArray[3]
-    width = int(x2)-int(x1)
-    height = int(y2)-int(y1)
+    width = str(float(x2) -float(x1))
+    height = str(float(y2)- float(y1))
 
     print("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2:" + y2)
     print("x1: " + x1 + " y1: " + y1 + " width: " + width + " height: " + height)
 
     cmd = "select target"
-    bbox = cod1+","+cod2+","+lenth+","+width
+    bbox = x1+","+y2+","+height+","+width
 
     with open(FIFO_PATH_CMD, 'w') as fifo:
         fifo.flush()
@@ -60,25 +60,35 @@ def get_post_javascript_data():
 
     return jsdata
 
-
-@app.route('/postmethodLeft', methods=['POST'])
-def get_post_javascript_datal():
+@app.route('/postmethodRes', methods=['POST'])
+def get_post_javascript_datares():
     jsdata = request.form['javascript_data']
     print("manual turning: ")
     print(jsdata)
 
-    print("call gimbal.move_to((-100,0)) or switch to pipe later ")
-    gimbal.move_to((IMG_SIZE[0]/4, IMG_SIZE[1]/2))
+    print("call gimbal ini to reset ")
+    gimbal.init_gimbal(IMG_SIZE)
+
+    return jsdata
+
+@app.route('/postmethodLeft', methods=['POST'])
+def get_post_javascript_datal():
+    jsdata = request.form['javascript_data']
+    print("manual turning: left")
+    print(jsdata)
+
+    print("call gimbal.move_to((....)) or switch to pipe later ")
+    gimbal.move_to((-IMG_SIZE[0]/4, IMG_SIZE[1]/2))
 
     return jsdata
 
 @app.route('/postmethodright', methods=['POST'])
 def get_post_javascript_datar():
     jsdata = request.form['javascript_data']
-    print("manual turning: ")
+    print("manual turning: right")
     print(jsdata)
     print("call gimbal.move_to( .... ) or switch to pipe later ")
-    gimbal.move_to((IMG_SIZE[0]/4, IMG_SIZE[1]/2))
+    gimbal.move_to((IMG_SIZE[0]*3/4, IMG_SIZE[1]/2))
 
     return jsdata
 
@@ -86,10 +96,10 @@ def get_post_javascript_datar():
 @app.route('/postmethodup', methods=['POST'])
 def get_post_javascript_datau():
     jsdata = request.form['javascript_data']
-    print("manual turning: ")
+    print("manual turning: up")
     print(jsdata)
     print("call gimbal.move_to(.... ) or switch to pipe later ")
-    gimbal.move_to((IMG_SIZE[0]/4, IMG_SIZE[1]/2))
+    gimbal.move_to((IMG_SIZE[0]/2, IMG_SIZE[1]/4))
 
     return jsdata
 
@@ -97,19 +107,14 @@ def get_post_javascript_datau():
 @app.route('/postmethoddown', methods=['POST'])
 def get_post_javascript_datad():
     jsdata = request.form['javascript_data']
-    print("manual turning: ")
+    print("manual turning: down")
     print(jsdata)
     print("call gimbal.move_to(.... ) or switch to pipe later ")
-    gimbal.move_to((IMG_SIZE[0]/4, IMG_SIZE[1]/2))
+    gimbal.move_to((IMG_SIZE[0]/2, IMG_SIZE[1]*3/4))
 
     return jsdata
 
 
-
-# @app.route('/CruisingMode')
-# def CruisingMode():
-#     # send a signal to motorcontroller/otherthings to alert camera to change mode
-#     return render_template('CruisingMode.html')
 
 
 @app.route('/ManualMode')

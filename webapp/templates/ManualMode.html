@@ -17,67 +17,62 @@
     </h1>
 
     <h2 style="color:white">Manual Mode Camera Feed</h2>
-    <img src="{{ url_for('video_feed') }}" height="480" width="640">
+    <img src="{{ url_for('video_feed') }}" height="360" width="640">
     <br>
     <br>
 
-    <div class="btn-group">
-        <p>Click Button to Turn Camera Right/Left or Up/Down</p>
+    <div class="btn-group" >
+     
 
         <button onclick="TurnLeft()" id = "selectBTNl" class="selectButton">Turn Left</button>
         <button onclick="TurnRight()" id = "selectBTNr" class="selectButton">Turn Right</button>
         <button onclick="TurnUp()" id = "selectBTNu" class="selectButton">Turn Up</button>
         <button onclick="TurnDown()" id = "selectBTNd" class="selectButton">Turn Down</button>
-
-        
-        <!-- <a style = "text-decoration:none;" href="{{ url_for('turnleft') }}">
-            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-            Turn  Left
-            </span>
-        </a>
-
-        <span style="width:50px;display:inline-block"></span>
-
-        <a style = "text-decoration:none;" href="{{ url_for('turnright') }}">
-            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-            Turn Right
-            </span>
-        </a>
-
-        <span style="width:50px;display:inline-block"></span>
         
 
-
-        <a style = "text-decoration:none;" href="{{ url_for('turnup') }}">
-            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-            Turn   Up
-            </span>
-        </a>
-
-        <span style="width:50px;display:inline-block"></span>
-
-        <a style = "text-decoration:none;" href="{{ url_for('turndown') }}">
-            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-            Turn  Down
-            </span>
-        </a> -->
-    
-        <!-- <br>
-        <br>
         
-        <br>
-        <br>
-        <br>
-
-        <a style = "text-decoration:none;" href="{{ url_for('stopturning') }}">
-            <span style=" border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
-            Stop Turning
-            </span>
-        </a> -->
+        
 
     </div>
+    <button onclick="resetL()" id = "selectBTNd" class="selectButton">Reset Location</button>
 
     <script>
+
+        document.onkeydown = function(e) { 
+            switch (e.keyCode) { 
+                case 37: 
+                    str = 'Left Key pressed!'; 
+                    TurnLeft()
+                    //alert(str);
+                    break; 
+                case 38: 
+                    str = 'Up Key pressed!';
+                    TurnUp()
+                    //alert(str);
+                    break; 
+                case 39: 
+
+                    str = 'Right Key pressed!'; 
+                    TurnRight()
+                    //alert(str);
+                    break; 
+                case 40: 
+                    str = 'Down Key pressed!'; 
+                    TurnDown()
+                    //alert(str);
+                    break; 
+            } 
+
+
+
+        }
+
+        function resetL(){
+            var subD = "reset location";
+            $.post("/postmethodRes", {
+                javascript_data: subD
+            });
+        }
         function TurnLeft(){
             var subD = "left";
             $.post("/postmethodLeft", {
@@ -119,13 +114,9 @@
     </script>
 <br>
 <br>
-<br>
-
-
 <div>
 
-    <br>
-    <br>
+   
         <a style = "text-decoration:none;" href="{{ url_for('index') }}">
             <span style="border-radius: 5px;padding:10px; color:white;background:#f90; font-weight:bold">
             Return To Main Page
