@@ -43,17 +43,23 @@ def get_post_javascript_data():
     jsdata = request.form['javascript_data']
     print(jsdata)
     coorArray = jsdata.split()
-    x1 = coorArray[0]
-    y1 = coorArray[1]
-    x2 = coorArray[2]
-    y2 = coorArray[3]
-    width = str(int(x2) - int(x1))
-    height = str(int(y2) - int(y1))
+    x1 = int(float(coorArray[0]))
+    y1 = int(float(coorArray[1]))
+    x2 = int(float(coorArray[2]))
+    y2 = int(float(coorArray[3]))
 
-    print("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2:" + y2)
-    print("x1: " + x1 + " y1: " + y1 + " width: " + width + " height: " + height)
+    xx1 = min(x1, x2)
+    yy1 = min(y1, y2)
+    xx2 = max(x1, x2)
+    yy2 = max(y1, y2)
+    
+    width = xx2 - xx1
+    height = yy2 - yy1
 
-    cmd = ["select target", x1+","+y2+","+width+","+height]
+    loc = f'{xx1},{yy1},{width},{height}'
+    print(f'select target: {loc}')
+    
+    cmd = ["select target", loc]
     send_cmd(cmd)
 
     return jsdata
