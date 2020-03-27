@@ -4,16 +4,12 @@ from flask import Flask, render_template, Response
 from camera import Camera
 from flask import request
 import json
-from motor_control import gimbal
-import time
 IMG_SIZE = (640, 360)
 
-CMD_FIFO_PATH = '/home/pi/fifo_cmd'
-
+FIFO_PATH_CMD = '/home/pi/fifo_cmd'
 
 
 app = Flask(__name__)
-gimbal.init_gimbal(IMG_SIZE)
 camera = Camera()
 
 
@@ -28,18 +24,22 @@ def streaming():
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
 
+def send_cmd(cmd):
+    with open(FIFO_PATH_CMD, 'w') as fifo:
+        for c in cmd:
+            fifo.flush()
+            fifo.write(c)
+            fifo.write('\n')
+
+
 @app.route('/')
 def index():
+    send_cmd(['manual', 'stop'])
     return render_template('index.html')
-
-
 
 
 @app.route('/postmethod', methods=['POST'])
 def get_post_javascript_data():
-    if not Path(CMD_FIFO_PATH).exists():
-        os.mkfifo(CMD_FIFO_PATH)
-
     jsdata = request.form['javascript_data']
     print(jsdata)
     coorArray = jsdata.split()
@@ -47,55 +47,47 @@ def get_post_javascript_data():
     y1 = coorArray[1]
     x2 = coorArray[2]
     y2 = coorArray[3]
-    width = str(float(x2) -float(x1))
-    height = str(float(y2)- float(y1))
+    width = str(int(x2) - int(x1))
+    height = str(int(y2) - int(y1))
 
     print("x1: " + x1 + " y1: " + y1 + " x2: " + x2 + " y2:" + y2)
     print("x1: " + x1 + " y1: " + y1 + " width: " + width + " height: " + height)
 
-    cmd = "select target"
-    bbox = x1+","+y2+","+height+","+width
-
-    with open(CMD_FIFO_PATH, 'w') as fifo:
-        fifo.flush()
-        fifo.write(cmd)
-        fifo.write('\n')
-        fifo.write(bbox)
+    cmd = ["select target", x1+","+y2+","+width+","+height]
+    send_cmd(cmd)
 
     return jsdata
+
 
 @app.route('/postmethodRes', methods=['POST'])
 def get_post_javascript_datares():
     jsdata = request.form['javascript_data']
     print("manual turning: ")
     print(jsdata)
-    send_moving_cmd("start")
-    print("call gimbal ini to reset ")
-    gimbal.init_gimbal(IMG_SIZE)
+    cmd = ['manual', 'location', 'reset']
+    send_cmd(cmd)
 
     return jsdata
+
 
 @app.route('/postmethodLeft', methods=['POST'])
 def get_post_javascript_datal():
     jsdata = request.form['javascript_data']
     print("manual turning: left")
     print(jsdata)
-    send_moving_cmd("start")
-    print("call gimbal.move_to((....)) or switch to pipe later ")
-    gimbal.move_to((-IMG_SIZE[0]/4, IMG_SIZE[1]/2))
-    send_moving_cmd("stop")
+    cmd = ['manual', 'location', f'{int(-IMG_SIZE[0]/4)},{int(IMG_SIZE[1]/2)}']
+    send_cmd(cmd)
 
     return jsdata
+
 
 @app.route('/postmethodright', methods=['POST'])
 def get_post_javascript_datar():
     jsdata = request.form['javascript_data']
     print("manual turning: right")
     print(jsdata)
-    send_moving_cmd("start")
-    print("call gimbal.move_to( .... ) or switch to pipe later ")
-    gimbal.move_to((IMG_SIZE[0]*3/4, IMG_SIZE[1]/2))
-    send_moving_cmd("stop")
+    cmd = ['manual', 'location', f'{int(IMG_SIZE[0]*3/4)},{int(IMG_SIZE[1]/2)}']
+    send_cmd(cmd)
 
     return jsdata
 
@@ -105,10 +97,8 @@ def get_post_javascript_datau():
     jsdata = request.form['javascript_data']
     print("manual turning: up")
     print(jsdata)
-    send_moving_cmd("start")
-    print("call gimbal.move_to(.... ) or switch to pipe later ")
-    gimbal.move_to((IMG_SIZE[0]/2, IMG_SIZE[1]/4))
-    send_moving_cmd("stop")
+    cmd = ['manual', 'location', f'{int(IMG_SIZE[0]/2)},{int(IMG_SIZE[1]/4)}']
+    send_cmd(cmd)
 
     return jsdata
 
@@ -118,25 +108,17 @@ def get_post_javascript_datad():
     jsdata = request.form['javascript_data']
     print("manual turning: down")
     print(jsdata)
-    send_moving_cmd("start")
-    print("call gimbal.move_to(.... ) or switch to pipe later ")
-    gimbal.move_to((IMG_SIZE[0]/2, IMG_SIZE[1]*3/4))
-    send_moving_cmd("stop")
-    
+    cmd = ['manual', 'location', f'{int(IMG_SIZE[0]/2)},{int(IMG_SIZE[1]*3/4)}']
+    send_cmd(cmd)
+
     return jsdata
-
-
 
 
 @app.route('/ManualMode')
 def ManualMode():
     # send a signal to motorcontroller/otherthings to alert camera to change mode
+    send_cmd(['manual', 'start'])
     return render_template('ManualMode.html')
-
-
-
-
-
 
 
 @app.route('/SelectTarget')
@@ -149,25 +131,6 @@ def SelectTarget():
 def video_feed():
     return Response(streaming(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
-# The secret to implement in-place updates is to use a multipart response.
-# Multipart responses consist of a header that includes one of the multipart content types,
-# followed by the parts,
-# separated by a boundary marker and each having its own part specific content type.
-# There are several multipart content types for different needs.
-# For the purpose of having a stream where each part replaces the previous part the
-# multipart/x-mixed-replace content type must be used.
-
-
-def send_moving_cmd(moving_cmd):
-    if not Path(CMD_FIFO_PATH).exists():
-        os.mkfifo(CMD_FIFO_PATH)
-
-    cmd = "manual"
-    with open(CMD_FIFO_PATH, 'w') as fifo:
-        fifo.flush()
-        fifo.write(cmd)
-        fifo.write('\n')
-        fifo.write(moving_cmd)
 
 
 if __name__ == '__main__':
