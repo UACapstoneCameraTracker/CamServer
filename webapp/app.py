@@ -63,7 +63,6 @@ def get_post_javascript_data():
 def get_post_javascript_datares():
     jsdata = request.form['javascript_data']
     print("manual turning: ")
-    print(jsdata)
     cmd = ['manual', 'location', 'reset']
     send_cmd(cmd)
 
@@ -74,8 +73,7 @@ def get_post_javascript_datares():
 def get_post_javascript_datal():
     jsdata = request.form['javascript_data']
     print("manual turning: left")
-    print(jsdata)
-    cmd = ['manual', 'location', f'{int(-IMG_SIZE[0]/4)},{int(IMG_SIZE[1]/2)}']
+    cmd = ['manual', 'location', f'{int(IMG_SIZE[0]/4)},{int(IMG_SIZE[1]/2)}']
     send_cmd(cmd)
 
     return jsdata
@@ -85,7 +83,6 @@ def get_post_javascript_datal():
 def get_post_javascript_datar():
     jsdata = request.form['javascript_data']
     print("manual turning: right")
-    print(jsdata)
     cmd = ['manual', 'location', f'{int(IMG_SIZE[0]*3/4)},{int(IMG_SIZE[1]/2)}']
     send_cmd(cmd)
 
@@ -96,7 +93,6 @@ def get_post_javascript_datar():
 def get_post_javascript_datau():
     jsdata = request.form['javascript_data']
     print("manual turning: up")
-    print(jsdata)
     cmd = ['manual', 'location', f'{int(IMG_SIZE[0]/2)},{int(IMG_SIZE[1]/4)}']
     send_cmd(cmd)
 
@@ -107,7 +103,6 @@ def get_post_javascript_datau():
 def get_post_javascript_datad():
     jsdata = request.form['javascript_data']
     print("manual turning: down")
-    print(jsdata)
     cmd = ['manual', 'location', f'{int(IMG_SIZE[0]/2)},{int(IMG_SIZE[1]*3/4)}']
     send_cmd(cmd)
 
